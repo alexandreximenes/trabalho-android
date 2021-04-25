@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="id_alim">
+        <item>@integer/abacaxi_id</item>
+        <item>@integer/maca_id</item>
+        <item>@integer/banana_id</item>
+        <item>@integer/salada_de_alface_id</item>
+        <item>@integer/salada_de_tomate_id</item>
+        <item>@integer/batata_id</item>
+        <item>@integer/cenoura_id</item>
+        <item>@integer/laranja_id</item>
+        <item>@integer/abacate_id</item>
+        <item>@integer/soja_id</item>
+    </integer-array>
+
+    <string-array name="nome_alim">
+        <item>@string/abacaxi</item>
+        <item>@string/maca</item>
+        <item>@string/banana</item>
+        <item>@string/salada_de_alface</item>
+        <item>@string/salada_de_tomate</item>
+        <item>@string/batata</item>
+        <item>@string/cenoura</item>
+        <item>@string/laranja</item>
+        <item>@string/abacate</item>
+        <item>@string/soja</item>
+    </string-array>
+
+
+    <string-array name="descricao">
+        <item>@string/descricao_abacaxi</item>
+        <item>@string/descricao_maca</item>
+        <item>@string/descricao_banana</item>
+        <item>@string/descricao_salada_de_alface</item>
+        <item>@string/descricao_salada_de_tomate</item>
+        <item>@string/descricao_batata</item>
+        <item>@string/descricao_cenoura</item>
+        <item>@string/descricao_laranja</item>
+        <item>@string/descricao_abacate</item>
+        <item>@string/descricao_soja</item>
+    </string-array>
+
+
+    <string-array name="consumo_diario">
+        <item>@string/abacaxi_consumo</item>
+        <item>@string/maca_consumo</item>
+        <item>@string/banana_consumo</item>
+        <item>@string/salada_de_alface_consumo</item>
+        <item>@string/salada_de_tomate_consumo</item>
+        <item>@string/batata_consumo</item>
+        <item>@string/cenoura_consumo</item>
+        <item>@string/laranja_consumo</item>
+        <item>@string/abacate_consumo</item>
+        <item>@string/soja_consumo</item>
+    </string-array>
+
+
+    <string-array name="qualidade">
+        <item>@string/abacaxi_qualidade</item>
+        <item>@string/maca_qualidade</item>
+        <item>@string/banana_qualidade</item>
+        <item>@string/salada_de_alface_qualidade</item>
+        <item>@string/salada_de_tomate_qualidade</item>
+        <item>@string/batata_qualidade</item>
+        <item>@string/cenoura_qualidade</item>
+        <item>@string/laranja_qualidade</item>
+        <item>@string/abacate_qualidade</item>
+        <item>@string/soja_qualidade</item>
+
+    </string-array>
+</resources>

@@ -1,0 +1,147 @@
+<resources>
+    <!--tela inicial-->
+    <string name="titulo_tela">Escolha uma opção</string>
+    <string name="titulo_med">Medicamentos</string>
+    <string name="titulo_alim">Alimentos</string>
+
+    <!--usuario-->
+    <string name="nome_usuario">Nome</string>
+    <string name="nome_usuario_hint">Informe seu nome</string>
+    <string name="sobrenome_usuario">Sobrenome</string>
+    <string name="sobrenome_usuario_hint">Informe seu sobrenome</string>
+    <string name="data_nascimento_usuario">Data de nascimento</string>
+    <string name="data_nascimento_usuario_hint">Informe Sua data nascimento</string>
+    <string name="sexo_usuario">Genero</string>
+    <string name="sexo_usuario_hint">Informe seu sexo</string>
+    <string name="sexo_masculino">Masculino</string>
+    <string name="sexo_feminino">Feminino</string>
+    <string name="sexo_nao_informado">Não quero informar</string>
+    <string name="telefone_usuario">Telefone</string>
+    <string name="telefone_usuario_hint">Informe seu telefone</string>
+    <string name="email_usuario">E-mail</string>
+    <string name="email_usuario_hint">Informe seu e-mail</string>
+
+    <!--Medicamentos-->
+    <string name="app_name">Controle de Colesterol</string>
+    <string name="medicamentos">Medicamentos</string>
+    <string name="nome_med">Nome</string>
+    <string name="nome_med_hint">Informe o nome do medicamento</string>
+    <string name="dias">Por quantos dias</string>
+    <string name="dias_hint">Por quantos dias você deve tomar o remedio</string>
+    <string name="intervalo">Intervalo de horas</string>
+    <string name="intervalo_hint">De quantas em quantas horas você deve tomar o remedio</string>
+    <string name="tratamento">Tratamento</string>
+    <string name="tratamento_hint">Informe qual é o tratamento indicado pelo medico</string>
+    <string name="doenca">Doença do tratamento</string>
+    <string name="botao_limpar">Limpar</string>
+    <string name="botao_salvar">Salvar</string>
+
+    <!--Alimentos-->
+    <string name="alimentos">Alimentos</string>
+    <string name="nome_alim">Nome</string>
+    <string name="nome_alim_hint">Nome do alimento</string>
+    <string name="qualidade_alim">Marque abaixxo se o alimento é considerado bom para saúde</string>
+    <string name="alimento_bom">bom</string>
+    <string name="alimento_ruim">ruim</string>
+    <string name="colesterol">Colesterol</string>
+    <string name="outras">Outras</string>
+    <string name="infomar_meus_dados">Infomar meus dados</string>
+    <string name="descricao_alim">Faça uma breve descrição do alimento ou use para adicionar alguma receita especial</string>
+    <string name="consumo_diario">Qual a quantidade diaria indicada</string>
+    <string name="consumo_diario_hint">Ex: 100 gramas</string>
+    <!--    botoes-->
+    <string name="mensagem_salvar">Salvo com sucesso</string>
+    <string name="mensagem_limpar">Campos limpos</string>
+
+    <string name="banana">Banana</string>
+    <string name="descricao_banana">
+Por ser rica em vitaminas do complexo B – são quatro presentes na banana: B1, B2, B6 e B12 – essa fruta auxilia diretamente o sistema nervoso. A banana contém muito ferro, que estimula a produção de hemoglobina. Portanto, incluir o seu consumo na dieta é uma forma eficiente de ajudar a combater a anemia.
+    </string>
+
+    <string name="maca">Maça</string>
+    <string name="descricao_maca">
+As maçãs contêm poderosos nutrientes que estimulam o sistema imunológico. Possuem fibras que ajudam a transportar resíduos para fora do corpo. Além disso, a fruta é fonte de vitamina C que contribui para que o organismo desenvolva resistência. Sendo assim, protege o organismo de doenças como gripes e resfriados
+    </string>
+
+    <string name="abacaxi">Abacaxi</string>
+    <string name="descricao_abacaxi">
+O abacaxi (Ananas comosus) possui diversos nutrientes que contribuem para evitar doenças e manter a saúde em dia. A fruta possui vitaminas A, C, B1, B2, B3, B5, B6, B9, manganês, magnésio e potássio, além de apresentar um composto ativo muito importante chamado bromelina.
+    </string>
+
+    <string name="salada_de_alface">Salada de alface</string>
+    <string name="descricao_salada_de_alface">
+A alface possui vitaminas A, C, K, fibras, antioxidantes, magnésio e potássio que são essenciais para o bom funcionamento do sistema imunológico.
+    </string>
+
+    <string name="salada_de_tomate">Salada de tomate</string>
+    <string name="descricao_salada_de_tomate">
+Apesar de normalmente ser usado como legume em saladas e pratos quentes, o tomate é uma fruta. Muito utilizado em dietas de emagrecimento, cada unidade tem apenas 25 calorias e propriedades diuréticas, além de vitamina C, que melhora o sistema imune e a absorção do ferro nas refeições.
+    </string>
+
+    <integer name="banana_id">1</integer>
+    <integer name="abacaxi_id">2</integer>
+    <integer name="maca_id">3</integer>
+    <integer name="salada_de_tomate_id">4</integer>
+    <integer name="salada_de_alface_id">5</integer>
+    <integer name="batata_id">6</integer>
+    <integer name="cenoura_id">7</integer>
+    <integer name="laranja_id">8</integer>
+    <integer name="abacate_id">9</integer>
+    <integer name="soja_id">10</integer>
+
+    <string name="banana_consumo">100 gramas</string>
+    <string name="abacaxi_consumo">80 gramas</string>
+    <string name="maca_consumo">50 gramas</string>
+    <string name="salada_de_tomate_consumo">50 gramas</string>
+    <string name="salada_de_alface_consumo">30 gramas</string>
+    <string name="batata_consumo">100 gramas</string>
+    <string name="cenoura_consumo">80 gramas</string>
+    <string name="laranja_consumo">30 gramas</string>
+    <string name="abacate_consumo">150 gramas</string>
+    <string name="soja_consumo">100 gramas</string>
+
+    <string name="banana_qualidade">@string/alimento_bom</string>
+    <string name="abacaxi_qualidade">@string/alimento_bom</string>
+    <string name="maca_qualidade">@string/alimento_bom</string>
+    <string name="salada_de_tomate_qualidade">@string/alimento_bom</string>
+    <string name="salada_de_alface_qualidade">@string/alimento_bom</string>
+    <string name="batata_qualidade">@string/alimento_bom</string>
+    <string name="cenoura_qualidade">@string/alimento_bom</string>
+    <string name="laranja_qualidade">@string/alimento_bom</string>
+    <string name="abacate_qualidade">@string/alimento_bom</string>
+    <string name="soja_qualidade">@string/alimento_bom</string>
+
+    <string name="foi_clicado">" foi clicado!"</string>
+    <string name="batata">batata</string>
+    <string name="cenoura">cenoura</string>
+    <string name="laranja">laranja</string>
+    <string name="abacate">abacate</string>
+    <string name="soja">soja</string>
+
+    <string name="descricao_batata">Adicionalmente, a batata é boa fonte de vitamina C e de algumas vitaminas do complexo B, especialmente niacina, tiamina e vitamina B6 (Tabela 2). Dentre os alimentos energéticos, a batata é o mais rico em niacina. A batata ainda é uma razoável fonte de ferro, bem como de fósforo e magnésio e ótima fonte de potássio.</string>
+    <string name="descricao_cenoura">As cenouras já fazem parte da dieta dos brasileiros em diversas preparações e são muito importantes para nossa saúde. São boas fontes de sais minerais, como ferro e cálcio, vitaminas K, A, C, E, do complexo B, além de manganês, potássio e fibras</string>
+    <string name="descricao_laranja">As laranjas são uma deliciosa fruta com um sabor picante e um cheiro edificante. São compostas por vitaminas A, B e C, cálcio, magnésio, potássio, fósforo, colina e outros nutrientes. Além disso, a fruta tem mais de 170 fitoquímicos e mais de 60 flavonóides com fortes efeitos anti-inflamatório e antioxidante.</string>
+    <string name="descricao_abacate">Em 100 g do alimento, há 96 calorias e 8,4 g de gordura. Além disso, ele contém fibras, vitaminas do complexo B, K e C, além de potássio e cobre. Há muitos tipos diferentes de abacates, variando em cor, tamanho e forma.</string>
+    <string name="descricao_soja">Tem alto valor proteico, é rico em ferro, cálcio, zinco, potássio, vitamina E e fibras - nutrientes importantes para a nossa saúde. Durante um tempo, a soja foi vista como um “grão milagroso”, que poderia prevenir diversas doenças, como as cardiovasculares, colesterol alto, osteoporose, diabetes e até câncer.</string>
+    <string name="consumo">"Consumo: "</string>
+    <string name="qualidade">"Qualidade: "</string>
+    <string name="descricao">"Descrição: "</string>
+    <string name="title_activity_alimentos_adapter">Alimentos</string>
+
+    <string name="autoria">Autoria</string>
+    <string name="autoria_nome">"Nome: "</string>
+    <string name="autoria_curso">"Curso: "</string>
+    <string name="autoria_email">"E-mail: "</string>
+    <string name="autoria_descricao">"Descrição do aplicativo: "</string>
+    <string name="autoria_curso_desc">UTFPR</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="sobre">Sobre</string>
+    <string name="menu">Menu principal</string>
+    <string name="menu_principal">Menu principal</string>
+    <string name="erro_interno_tente_mais_tarde">Erro interno, tente mais tarde</string>
+    <string name="cadastro">cadastro</string>
+    <string name="editando">"Editando "</string>
+    <string name="novo">"Novo "</string>
+    <string name="codigo">Codigo</string>
+
+</resources>
