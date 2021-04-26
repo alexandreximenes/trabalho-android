@@ -53,7 +53,7 @@ public class MedicamentosActivity extends AppCompatActivity {
         edDiasMed.setText("");
         edIntervaloMed.setText("");
         edNomeMed.requestFocus();
-        mostrarMensagem(getString(R.string.mensagem_limpar));
+        mostrarMensagem(getString(R.string.limpo_com_sucesso));
     }
 
     private void mostrarMensagem(String mensagem) {
@@ -117,7 +117,7 @@ public class MedicamentosActivity extends AppCompatActivity {
 //        String doencaSelecionada = (String) spinnerDoenca.getSelectedItem();
 
         montarIntentResult(medicamento, intent);
-        mostrarMensagem(getString(R.string.mensagem_salvar));
+        mostrarMensagem(getString(R.string.salvo_com_sucesso));
 
     }
 

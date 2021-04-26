@@ -3,54 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/layoutListaDeAlimentos"
     android:layout_height="match_parent"
     tools:context=".ListaDeAlimentosActivity">
 
     <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
+        android:padding="16dp"
        android:orientation="vertical">
 
         <ListView
             android:id="@+id/listaDeAlimentos"
             android:layout_width="match_parent"
-            android:layout_height="600dp">
+            android:layout_height="match_parent">
 
         </ListView>
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:orientation="horizontal">
+<!--       <LinearLayout-->
+<!--           android:layout_width="match_parent"-->
+<!--           android:layout_height="match_parent"-->
+<!--           android:orientation="horizontal">-->
 
-           <Button
-               android:id="@+id/btMenu"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:onClick="menuPrincipal"
-               android:text="@string/menu" />
+<!--           <Button-->
+<!--               android:id="@+id/btMenu"-->
+<!--               android:layout_width="wrap_content"-->
+<!--               android:layout_height="wrap_content"-->
+<!--               android:onClick="menuPrincipal"-->
+<!--               android:text="@string/menu" />-->
 
-           <Button
-               android:id="@+id/btAdicionarAlimento"
-               android:layout_width="100dp"
-               android:layout_height="50dp"
-               android:layout_weight="1"
-               android:onClick="telaCadastroAlimentos"
-               android:text="@string/adicionar"
-               android:textColor="#3F51B5"
-               app:backgroundTint="#FFFFFF" />
+<!--           <Button-->
+<!--               android:id="@+id/btAdicionarAlimento"-->
+<!--               android:layout_width="100dp"-->
+<!--               android:layout_height="50dp"-->
+<!--               android:layout_weight="1"-->
+<!--               android:onClick="telaNovoAlimentos"-->
+<!--               android:text="@string/adicionar"-->
+<!--               android:textColor="#3F51B5"-->
+<!--               app:backgroundTint="#FFFFFF" />-->
 
-           <Button
-               android:onClick="autoria"
-               android:id="@+id/brSobre"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"
-               android:text="@string/sobre"
-               android:textColor="#3F51B5"
-               app:backgroundTint="#FFFFFF" />
+<!--           <Button-->
+<!--               android:onClick="autoria"-->
+<!--               android:id="@+id/brSobre"-->
+<!--               android:layout_width="wrap_content"-->
+<!--               android:layout_height="wrap_content"-->
+<!--               android:layout_weight="1"-->
+<!--               android:text="@string/sobre"-->
+<!--               android:textColor="#3F51B5"-->
+<!--               app:backgroundTint="#FFFFFF" />-->
 
-       </LinearLayout>
+<!--       </LinearLayout>-->
 
     </LinearLayout>
 

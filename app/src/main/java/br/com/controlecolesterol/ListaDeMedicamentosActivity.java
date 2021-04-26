@@ -44,6 +44,7 @@ public class ListaDeMedicamentosActivity extends AppCompatActivity {
                 mostrarMensagem(getApplicationContext(), item + getString(R.string.foi_clicado));
             }
         });
+
     }
 
     @Override

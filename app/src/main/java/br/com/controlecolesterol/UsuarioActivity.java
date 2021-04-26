@@ -85,7 +85,7 @@ public class UsuarioActivity extends AppCompatActivity {
         }
         Log.d("Sexo escolhido: ", String.valueOf(sexo));
 
-        mostrarMensagem(getString(R.string.mensagem_salvar));
+        mostrarMensagem(getString(R.string.salvo_com_sucesso));
 
     }
 
@@ -98,7 +98,7 @@ public class UsuarioActivity extends AppCompatActivity {
         edEmailUser.setText("");
         rgSexo.clearCheck();
         edNomeUser.requestFocus();
-        mostrarMensagem(getString(R.string.mensagem_limpar));
+        mostrarMensagem(getString(R.string.limpo_com_sucesso));
 
     }
 

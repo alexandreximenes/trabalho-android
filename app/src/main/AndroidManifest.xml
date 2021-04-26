@@ -9,11 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ControleColesterol">
-        <activity android:name=".ListaDeMedicamentosActivity"></activity>
+        <activity android:name=".UserPreferences"></activity>
+        <activity android:name=".ListaDeMedicamentosActivity" />
         <activity android:name=".AutoriaActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".UsuarioActivity" />
-        <activity android:name=".AlimentosActivity" />
+        <activity
+            android:name=".AlimentosActivity"
+            android:parentActivityName=".ListaDeAlimentosActivity" />
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ListaDeAlimentosActivity" />
+
         <activity android:name=".MedicamentosActivity" />
         <activity android:name=".ListaDeAlimentosActivity">
             <intent-filter>

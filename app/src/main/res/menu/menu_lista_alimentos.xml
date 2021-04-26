@@ -7,11 +7,19 @@
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/adicionar"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/menuSobreAutoria"
-        android:title="@string/sobre" />
+
     <item
         android:id="@+id/menuIrTelaPrincipal"
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="@string/menu_principal" />
+
+    <item
+        android:id="@+id/menuItemPreferencias"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/IrParaPreferencias"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuSobreAutoria"
+        android:title="@string/sobre" />
 </menu>
