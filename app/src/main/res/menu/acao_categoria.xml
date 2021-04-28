@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemMenuSalvarCategoria"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/salvar_categoria"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/itemMenuLimparCategoria"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/botao_limpar"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/itemMenuSairCategoria"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/sair_categoria" />
+
+
+</menu>

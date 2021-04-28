@@ -1,7 +1,12 @@
 package br.com.controlecolesterol.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Medicamento {
 
+    @PrimaryKey(autoGenerate = true)
     private Integer id;
     private String nome;
     private String tratamento;

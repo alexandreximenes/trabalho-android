@@ -4,30 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layoutMain"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
         android:text="@string/titulo_tela"
         android:textAlignment="center"
+        android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="-2dp" />
 
     <Button
-        android:onClick="telaMedicamentos"
         android:id="@+id/btMed"
         android:layout_width="match_parent"
         android:layout_height="79dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="20dp"
+        android:onClick="telaMedicamentos"
         android:text="@string/titulo_med"
         app:backgroundTint="#FFC107"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <Button
         android:onClick="telaListaAlimentos"
@@ -47,7 +49,7 @@
         android:text="@string/infomar_meus_dados"
         app:backgroundTint="#2196F3"
         app:layout_constraintStart_toStartOf="@+id/btAlim"
-        app:layout_constraintTop_toBottomOf="@+id/btAlim" />
+        app:layout_constraintTop_toBottomOf="@+id/btCategoriaAlim" />
 
     <Button
         android:id="@+id/btAutoria"
@@ -58,9 +60,28 @@
         android:layout_marginBottom="32dp"
         android:onClick="autoria"
         android:text="@string/autoria"
-        android:textColor="#3F51B5"
+        android:textColor="@color/purple_500"
         app:backgroundTint="#FDFDFD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btCategoriaAlim"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:onClick="telaDeCategoriasAlimento"
+        android:text="@string/lista_de_categorias"
+        app:layout_constraintTop_toBottomOf="@+id/btAlim"
+        tools:layout_editor_absoluteX="104dp" />
+
+    <Button
+        android:id="@+id/btPreferencias"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:onClick="telaDePreferencias"
+        android:text="@string/preferencias_usuario"
+        app:backgroundTint="@color/teal_200"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btCadastrarUsuario" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

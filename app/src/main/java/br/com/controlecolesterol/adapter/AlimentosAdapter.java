@@ -21,13 +21,14 @@ public class AlimentosAdapter extends BaseAdapter {
     private Context context;
     private List<Alimento> alimentos;
     private boolean modoNoturno;
-    private LinearLayout linearLayout;
-    private ConstraintLayout layout;
+    private LinearLayout layoutListaDeAlimentos;
+    private TextView tvLabelId, tvLabelProduto, tvId, textViewLabelConsumo, textViewQuantidade, textViewLabelDescription;
 
-    public AlimentosAdapter(Context context, List<Alimento> alimentos, boolean modoNoturno) {
+    public AlimentosAdapter(Context context, List<Alimento> alimentos, boolean modoNoturno, LinearLayout layoutListaDeAlimentos) {
         this.context = context;
         this.alimentos = alimentos;
         this.modoNoturno = modoNoturno;
+        this.layoutListaDeAlimentos = layoutListaDeAlimentos;
     }
 
     public static class AlimentoHolder{
@@ -63,18 +64,18 @@ public class AlimentosAdapter extends BaseAdapter {
 
             holder = new AlimentoHolder();
 
-            if(modoNoturno){
-                view.setBackgroundColor(UserPreferences.RGB_DARK);
-
-            }else{
-
-            }
-
             holder.id = view.findViewById(R.id.tvId);
             holder.nome = view.findViewById(R.id.tvNome);
             holder.consumo = view.findViewById(R.id.tvConsumo);
             holder.qualidade = view.findViewById(R.id.tvQualidade);
             holder.descricao = view.findViewById(R.id.tvDescricao);
+
+            tvLabelId = view.findViewById(R.id.tvLabelId);
+            tvLabelProduto = view.findViewById(R.id.tvLabelProduto);
+            tvId = view.findViewById(R.id.tvId);
+            textViewLabelConsumo = view.findViewById(R.id.textViewLabelConsumo);
+            textViewQuantidade = view.findViewById(R.id.textViewQuantidade);
+            textViewLabelDescription = view.findViewById(R.id.textViewLabelDescription);
 
             view.setTag(holder);
 
@@ -85,8 +86,28 @@ public class AlimentosAdapter extends BaseAdapter {
         holder.id.setText(alimentos.get(i).getId().toString());
         holder.nome.setText(alimentos.get(i).getNome());
         holder.consumo.setText(alimentos.get(i).getConsumoRecomendado());
-        holder.qualidade.setText(alimentos.get(i).getAlimentoBom() ? R.string.alimento_bom : R.string.alimento_ruim);
+        holder.qualidade.setText(alimentos.get(i).isAlimentoBom() ? R.string.alimento_bom : R.string.alimento_ruim);
         holder.descricao.setText(alimentos.get(i).getDescricao());
+
+        if(modoNoturno){
+            view.setBackgroundColor(UserPreferences.COLOR_DARK);
+            tvLabelId.setTextColor(UserPreferences.COLOR_GRAY);
+            tvLabelProduto.setTextColor(UserPreferences.COLOR_GRAY);
+            tvId.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelConsumo.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewQuantidade.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelDescription.setTextColor(UserPreferences.COLOR_GRAY);
+            layoutListaDeAlimentos.setBackgroundColor(UserPreferences.COLOR_DARK);
+        }else{
+            view.setBackgroundColor(UserPreferences.COLOR_WHITE);
+            tvLabelId.setTextColor(UserPreferences.COLOR_GRAY);
+            tvLabelProduto.setTextColor(UserPreferences.COLOR_GRAY);
+            tvId.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelConsumo.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewQuantidade.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelDescription.setTextColor(UserPreferences.COLOR_GRAY);
+            layoutListaDeAlimentos.setBackgroundColor(UserPreferences.COLOR_WHITE);
+        }
 
         notifyDataSetChanged();
 

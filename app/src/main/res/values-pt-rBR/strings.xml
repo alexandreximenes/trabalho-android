@@ -154,5 +154,32 @@ Apesar de normalmente ser usado como legume em saladas e pratos quentes, o tomat
     <string name="sair">Sair</string>
     <string name="IrParaPreferencias">Preferências</string>
     <string name="preferencias_salvas">Preferências salvas com sucesso!</string>
+    <string name="buscando">\"Buscando \"</string>
+    <string name="frutas">frutas</string>
+    <string name="verduras">verduras</string>
+    <string name="categoria">Categoria</string>
+    <string name="categoria_nome">Descricao</string>
+    <string name="lista_de_categorias">Lista de categorias</string>
+    <string name="deve_ser_preenchido">deve ser preenchido</string>
+    <string name="informe_qual_categoria">Informe qual é a categoria</string>
+    <string name="salvar_categoria">Salvar</string>
+    <string name="sair_categoria">sair</string>
+    <string name="escolha_uma_categoria">Escolha uma categoria</string>
+    <string name="sim">sim</string>
+    <string name="nao">nao</string>
+    <string name="confirmacao">Confirmação</string>
+    <string name="nova_categoria">Nova categoria</string>
+    <string name="categoria_nao_pode_ser_excluida">Essa categoria já esta sendo utilizada por outros alimentos, não é possivel excluir</string>
+    <string name="preferencias_usuario">Preferencias do usuário</string>
+    <string name="deletando">\"Deletando: \"</string>
+    <string name="deseja_continuar">, deseja continuar ?</string>
+    <string name="informe_seu_email">Informe seu email</string>
+    <string name="informe_seu_telefone_celular">Informe seu telefone celular</string>
+    <string name="informe_sua_data_de_nascimento">Informe sua data de nascimento</string>
+    <string name="informe_seu_sobrenome">Informe seu sobrenome</string>
+    <string name="informe_seu_nome">Informe seu nome</string>
+
+    <integer name="frutasId">1</integer>
+    <integer name="verdurasId">2</integer>
 
 </resources>

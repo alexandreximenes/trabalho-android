@@ -27,7 +27,6 @@
         <item>@string/soja</item>
     </string-array>
 
-
     <string-array name="descricao">
         <item>@string/descricao_abacaxi</item>
         <item>@string/descricao_maca</item>
@@ -69,4 +68,23 @@
         <item>@string/soja_qualidade</item>
 
     </string-array>
+
+    <string-array name="categorias">
+        <item>@string/frutas</item>
+        <item>@string/verduras</item>
+    </string-array>
+
+    <integer-array name="categoriasId">
+        <item>@integer/frutasId</item>
+        <item>@integer/frutasId</item>
+        <item>@integer/frutasId</item>
+        <item>@integer/verdurasId</item>
+        <item>@integer/verdurasId</item>
+        <item>@integer/verdurasId</item>
+        <item>@integer/verdurasId</item>
+        <item>@integer/frutasId</item>
+        <item>@integer/frutasId</item>
+        <item>@integer/frutasId</item>
+    </integer-array>
+
 </resources>

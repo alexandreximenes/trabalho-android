@@ -2,12 +2,15 @@ package br.com.controlecolesterol;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class UsuarioActivity extends AppCompatActivity {
@@ -17,6 +20,8 @@ public class UsuarioActivity extends AppCompatActivity {
     RadioButton rbSexoFemininoUser, rbSexoMasculinoUser, rbSexoNaoInformadoUser;
     String nome, sobrenome, dataNascimento, telefone, email;
     int sexo;
+    private boolean MODO_NOTURNO = false;
+//    private TextView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,56 @@ public class UsuarioActivity extends AppCompatActivity {
         rbSexoMasculinoUser = (RadioButton) findViewById(R.id.rbSexoMasculinoUser);
         rbSexoFemininoUser = (RadioButton) findViewById(R.id.rbSexoFemininoUser);
         rbSexoNaoInformadoUser = (RadioButton) findViewById(R.id.rbSexoNaoInformadoUser);
+
+        MODO_NOTURNO = isModoNoturno();
+        setModoNoturno();
+
+    }
+
+    private void setModoNoturno() {
+        if(MODO_NOTURNO){
+            textViewtTituloMedicamento.setTextColor(UserPreferences.COLOR_GRAY);
+            edNomeMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edNomeMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edTratamentoMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edTratamentoMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edDiasMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edDiasMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edIntervaloMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edIntervaloMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            layoutMedicamentos.setBackgroundColor(UserPreferences.COLOR_DARK);
+
+            textViewLabelNomeMedicamento.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelTratamentoMed.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelDiasMed.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelIntervaloMed.setTextColor(UserPreferences.COLOR_GRAY);
+
+        }else{
+            textViewtTituloMedicamento.setTextColor(UserPreferences.COLOR_GRAY);
+            edNomeMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edNomeMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edTratamentoMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edTratamentoMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edDiasMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edDiasMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edIntervaloMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edIntervaloMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            layoutMedicamentos.setBackgroundColor(UserPreferences.COLOR_DARK);
+
+            textViewLabelNomeMedicamento.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelTratamentoMed.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelDiasMed.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelIntervaloMed.setTextColor(UserPreferences.COLOR_GRAY);
+            layoutMedicamentos.setBackgroundColor(UserPreferences.COLOR_WHITE);
+        }
+    }
+
+    private SharedPreferences getPrefs() {
+        return getSharedPreferences(UserPreferences.PREFERENCES_PATH, Context.MODE_PRIVATE);
+    }
+    public boolean isModoNoturno() {
+        SharedPreferences prefs = getPrefs();
+        return prefs.getBoolean(UserPreferences.MODO_NOTURNO, false);
     }
 
     public void salvarUsuario(View view) {
@@ -45,47 +100,46 @@ public class UsuarioActivity extends AppCompatActivity {
         email = edEmailUser.getText().toString();
 
         if(nome == "" || nome.trim().isEmpty()) {
-            mostrarMensagem("Informe seu nome");
+            Mensagem.toast(getBaseContext(), getString(R.string.informe_seu_nome));
             edNomeUser.requestFocus();
             return;
         }
         if(sobrenome == "" || sobrenome.trim().isEmpty()) {
-            mostrarMensagem("Informe seu sobrenome");
+            Mensagem.toast(getBaseContext(), getString(R.string.informe_seu_sobrenome));
             edSobrenomeUser.requestFocus();
             return;
         }
         if(dataNascimento == "" || dataNascimento.trim().isEmpty()) {
-            mostrarMensagem("Informe sua data de nascimento");
+            Mensagem.toast(getBaseContext(), getString(R.string.informe_sua_data_de_nascimento));
             edDataNascimentoUser.requestFocus();
             return;
         }
         if(telefone == "" || telefone.trim().isEmpty()) {
-            mostrarMensagem("Informe seu telefone celular");
+            Mensagem.toast(getBaseContext(), getString(R.string.informe_seu_telefone_celular));
             edTelefoneUser.requestFocus();
             return;
         }
         if(email == "" || email.trim().isEmpty()) {
-            mostrarMensagem("Informe seu e-mail");
+            Mensagem.toast(getBaseContext(), getString(R.string.informe_seu_email));
             edEmailUser.requestFocus();
             return;
         }
 
         switch (rgSexo.getCheckedRadioButtonId()){
             case R.id.rbSexoMasculinoUser:
-                mostrarMensagem("Sexo Masculino");
+                Mensagem.toast(getBaseContext(), getString(R.string.sexo_masculino));
                 sexo = R.id.rbSexoMasculinoUser;
                 break;
             case R.id.rbSexoFemininoUser:
-                mostrarMensagem("Sexo Masculino");
+                Mensagem.toast(getBaseContext(), getString(R.string.sexo_feminino));
                 sexo = R.id.rbSexoFemininoUser;
                 break;
             case R.id.rbSexoNaoInformadoUser:
                 sexo = R.id.rbSexoNaoInformadoUser;
                 break;
         }
-        Log.d("Sexo escolhido: ", String.valueOf(sexo));
 
-        mostrarMensagem(getString(R.string.salvo_com_sucesso));
+        Mensagem.toast(getBaseContext(), getString(R.string.salvo_com_sucesso));
 
     }
 
@@ -98,12 +152,7 @@ public class UsuarioActivity extends AppCompatActivity {
         edEmailUser.setText("");
         rgSexo.clearCheck();
         edNomeUser.requestFocus();
-        mostrarMensagem(getString(R.string.limpo_com_sucesso));
+        Mensagem.toast(getBaseContext(), getString(R.string.limpo_com_sucesso));
 
     }
-
-    private void mostrarMensagem(String mensagem) {
-        Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
-    }
-
 }

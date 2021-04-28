@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,10 +19,12 @@ import android.widget.Toast;
 
 public class UserPreferences extends AppCompatActivity {
 
-    public static final int RGB_DARK = Color.rgb(20, 20, 31);
-    public static final int TEXT_GRAY = Color.GRAY;
-
-    public static final int RGB_WHITE = Color.WHITE;
+    public static final int COLOR_DARK = Color.rgb(20, 20, 31);
+    public static final int COLOR_GRAY = Color.GRAY;
+    public static final int COLOR_BLUE = Color.BLUE;
+    public static final int COLOR_WHITE = Color.WHITE;
+    public static final int COLOR_BLACK = Color.BLACK;
+    public static final int COLOR_YELLOW = Color.YELLOW;
 
     private ConstraintLayout constraintLayout;
     private TextView textViewTitulo, textViewLabelModoNoturno;
@@ -140,16 +141,15 @@ public class UserPreferences extends AppCompatActivity {
 
         if(modoNoturnoChecked){
 
-            constraintLayout.setBackgroundColor(RGB_DARK);
-            textViewTitulo.setTextColor(TEXT_GRAY);
-            textViewLabelModoNoturno.setTextColor(TEXT_GRAY);
+            constraintLayout.setBackgroundColor(COLOR_DARK);
+            textViewTitulo.setTextColor(COLOR_GRAY);
+            textViewLabelModoNoturno.setTextColor(COLOR_GRAY);
 
         }else{
             constraintLayout.setBackgroundColor(backgroundColorLayout);
             textViewTitulo.setTextColor(textColor);
             textViewLabelModoNoturno.setTextColor(textColor);
         }
-
     }
 
     private void mostrarMensagem(Context context, String mensagem) {

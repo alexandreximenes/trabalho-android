@@ -155,5 +155,32 @@ Although normally used as a vegetable in salads and hot dishes, tomatoes are a f
     <string name="sair">Go out</string>
     <string name="IrParaPreferencias">Preferences</string>
     <string name="preferencias_salvas">Preferences saved successfully!</string>
+    <string name="buscando">"Searching "</string>
+    <string name="frutas">fruits</string>
+    <string name="verduras">vegetables</string>
+    <string name="categoria">Category</string>
+    <string name="categoria_nome">Description</string>
+    <string name="lista_de_categorias">Categories list</string>
+    <string name="deve_ser_preenchido">required</string>
+    <string name="informe_qual_categoria">Tell us which category</string>
+    <string name="salvar_categoria">Save</string>
+    <string name="sair_categoria">Close</string>
+    <string name="escolha_uma_categoria">Choose a category</string>
+    <string name="sim">Yes</string>
+    <string name="nao">No</string>
+    <string name="confirmacao">Confirmation</string>
+    <string name="nova_categoria">New category</string>
+    <string name="categoria_nao_pode_ser_excluida">This category is already being used by other foods, it is not possible to exclude</string>
+    <string name="preferencias_usuario">User preferences</string>
+    <string name="deletando">"Deleting: "</string>
+    <string name="deseja_continuar">, do you wish to continue ?</string>
+    <string name="informe_seu_email">Enter your email</string>
+    <string name="informe_seu_telefone_celular">Enter your phone number</string>
+    <string name="informe_sua_data_de_nascimento">ENter your birthday</string>
+    <string name="informe_seu_sobrenome">Enter your last name</string>
+    <string name="informe_seu_nome">Enter your first name</string>
+
+    <integer name="frutasId">1</integer>
+    <integer name="verdurasId">2</integer>
 
 </resources>

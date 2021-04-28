@@ -2,30 +2,32 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutAuthorship"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AutoriaActivity">
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/textViewLabelTittleAuthorship"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="@string/autoria"
+        android:layout_marginTop="30dp"
         android:gravity="center"
+        android:text="@string/autoria"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/textViewLabelNome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:text="@string/autoria_nome"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewLabelTittleAuthorship" />
 
     <TextView
         android:id="@+id/tvAutoriaNome"
@@ -33,20 +35,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="50dp"
-        android:textColor="#9C27B0"
+        android:layout_marginTop="30dp"
+        android:textColor="?attr/colorOnBackground"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintStart_toEndOf="@+id/textViewLabelNome"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLabelTittleAuthorship" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/textViewLabelCourse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/autoria_curso"
-        app:layout_constraintStart_toStartOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelNome"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLabelNome" />
 
     <TextView
         android:id="@+id/tvAutoriaCurso"
@@ -55,19 +57,19 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="16dp"
-        android:textColor="#9C27B0"
+        android:textColor="#000000"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView23"
+        app:layout_constraintStart_toEndOf="@+id/textViewLabelCourse"
         app:layout_constraintTop_toBottomOf="@+id/tvAutoriaNome" />
 
     <TextView
-        android:id="@+id/textView28"
+        android:id="@+id/textViewLabelEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/autoria_email"
-        app:layout_constraintStart_toStartOf="@+id/textView23"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelCourse"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLabelCourse" />
 
     <TextView
         android:id="@+id/tvAuditoriaEmail"
@@ -76,29 +78,31 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="16dp"
-        android:textColor="#9C27B0"
+        android:textColor="#000000"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView28"
+        app:layout_constraintStart_toEndOf="@+id/textViewLabelEmail"
         app:layout_constraintTop_toBottomOf="@+id/tvAutoriaCurso" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/textViewLabelDescriptionAuthorship"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/autoria_descricao"
-        app:layout_constraintStart_toStartOf="@+id/textView28"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelEmail"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLabelEmail" />
 
     <TextView
         android:id="@+id/tvAuditoriaDescricao"
         android:layout_width="370dp"
-        android:layout_height="192dp"
+        android:layout_height="310dp"
         android:layout_marginTop="16dp"
-        android:textColor="#9C27B0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#000000"
+        android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/textView30"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelDescriptionAuthorship"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLabelDescriptionAuthorship" />
 
     <ImageView
         android:id="@+id/imageView"

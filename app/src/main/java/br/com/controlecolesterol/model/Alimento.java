@@ -1,22 +1,34 @@
 package br.com.controlecolesterol.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
+@Entity(foreignKeys = @ForeignKey(entity = Categoria.class, parentColumns = "id", childColumns = "categoriaId"))
 public class Alimento {
 
+    @PrimaryKey(autoGenerate = true)
     private Integer id;
     private String nome;
     private String descricao;
     private String consumoRecomendado;
     private boolean alimentoBom;
 
+    @ColumnInfo(index = true)
+    private int categoriaId;
+
     public Alimento() {
     }
 
-    public Alimento(Integer id, String nome, String descricao, String consumoRecomendado, boolean alimentoBom, String quantidade) {
+    public Alimento(int id, String nome, String descricao, String quantidade, boolean alimentoBom, int categoriaId) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.consumoRecomendado = consumoRecomendado;
+        this.consumoRecomendado = quantidade;
         this.alimentoBom = alimentoBom;
+        this.categoriaId = categoriaId;
     }
 
     public Integer getId() {
@@ -51,12 +63,20 @@ public class Alimento {
         this.consumoRecomendado = consumoRecomendado;
     }
 
-    public boolean getAlimentoBom() {
+    public boolean isAlimentoBom() {
         return alimentoBom;
     }
 
     public void setAlimentoBom(boolean alimentoBom) {
         this.alimentoBom = alimentoBom;
+    }
+
+    public int getCategoriaId() {
+        return categoriaId;
+    }
+
+    public void setCategoriaId(int categoriaId) {
+        this.categoriaId = categoriaId;
     }
 
     @Override

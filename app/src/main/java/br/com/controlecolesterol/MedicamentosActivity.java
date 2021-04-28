@@ -1,52 +1,171 @@
 package br.com.controlecolesterol;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.util.List;
-
+import br.com.controlecolesterol.dao.Database;
 import br.com.controlecolesterol.model.Medicamento;
-
-import static java.util.Arrays.asList;
 
 public class MedicamentosActivity extends AppCompatActivity {
 
+    private boolean MODO_NOTURNO = false;
+    private TextView textViewtTituloMedicamento, textViewLabelNomeMedicamento, textViewLabelTratamentoMed, textViewLabelDiasMed, textViewLabelIntervaloMed;
     private EditText edNomeMed, edTratamentoMed, edDiasMed, edIntervaloMed;
     private String nome, tratamento, dias, intervalo;
-    private boolean retornarDadosParaActivity;
-    private Spinner spinnerDoenca;
-    private int lastID;
+    private Integer codigoId;
+    public static final String ID = "ID";
+    private Database database;
+    private ConstraintLayout layoutMedicamentos;
+    private boolean acaoNovo;
+    private boolean acaoEditar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicamentos);
 
+        database = Database.getDatabase(getBaseContext());
+
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         edNomeMed = (EditText) findViewById(R.id.edNomeMed);
         edTratamentoMed = (EditText) findViewById(R.id.edTratamentoMed);
         edDiasMed = (EditText) findViewById(R.id.edDiasMed);
         edIntervaloMed = (EditText) findViewById(R.id.edIntervaloMed);
-        spinnerDoenca = (Spinner) findViewById(R.id.spinnerDoenca);
+
+        textViewtTituloMedicamento = findViewById(R.id.textViewtTituloMedicamento);
+        textViewLabelNomeMedicamento = findViewById(R.id.textViewLabelNomeMedicamento);
+        textViewLabelTratamentoMed = findViewById(R.id.textViewLabelTratamentoMed);
+        textViewLabelDiasMed = findViewById(R.id.textViewLabelDiasMed);
+        textViewLabelIntervaloMed = findViewById(R.id.textViewLabelIntervaloMed);
+        layoutMedicamentos = findViewById(R.id.layoutMedicamentos);
+
+        MODO_NOTURNO = isModoNoturno();
+        setModoNoturno();
 
         Bundle bundle = getIntent().getExtras();
 
-        if(bundle != null){
-            retornarDadosParaActivity = bundle.getBoolean(ListaDeMedicamentosActivity.RETORNAR_DADOS_SALVOS);
-            lastID = bundle.getInt(ListaDeMedicamentosActivity.LAST_ID);
+        if (bundle != null) {
+
+            codigoId = bundle.getInt(ID, -1);
+            if (codigoId > 0) {
+                acaoEditar = bundle.getBoolean(ListaDeAlimentosActivity.EDITAR, false);
+                exibirDadosDeEdicaoNaTela();
+            } else {
+                codigoId = null;
+                String title = getString(R.string.novo) + getString(R.string.cadastro);
+                Mensagem.toast(getBaseContext(), title);
+                setTitle(title);
+                acaoNovo = bundle.getBoolean(ListaDeAlimentosActivity.NOVO, false);
+            }
         }
-//        this.mostrarDoencas();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.salvar_limpar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        Intent intent = null;
+        switch (item.getItemId()){
+            case R.id.menuItemSalvar:
+                salvarMed();
+                return true;
+            case R.id.menuItemLimpar:
+                limparMed();
+                return true;
+            case R.id.menuIrTelaPrincipal:
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void exibirDadosDeEdicaoNaTela() {
+
+        String title = getString(R.string.editando) + getString(R.string.cadastro);
+        Mensagem.toast(getBaseContext(), title);
+        setTitle(title);
+
+        Medicamento medicamento = database.medicamentoDao().findById(codigoId);
+
+        edNomeMed.setText(medicamento.getNome());
+        edTratamentoMed.setText(medicamento.getNome());
+        edDiasMed.setText(String.valueOf(medicamento.getDias()));
+        edIntervaloMed.setText(String.valueOf(medicamento.getIntervalo()));
 
     }
 
-    public void limparMed(View view) {
+    private void setModoNoturno() {
+        if(MODO_NOTURNO){
+            textViewtTituloMedicamento.setTextColor(UserPreferences.COLOR_GRAY);
+            edNomeMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edNomeMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edTratamentoMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edTratamentoMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edDiasMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edDiasMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edIntervaloMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edIntervaloMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            layoutMedicamentos.setBackgroundColor(UserPreferences.COLOR_DARK);
+
+            textViewLabelNomeMedicamento.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelTratamentoMed.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelDiasMed.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelIntervaloMed.setTextColor(UserPreferences.COLOR_GRAY);
+
+        }else{
+            textViewtTituloMedicamento.setTextColor(UserPreferences.COLOR_GRAY);
+            edNomeMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edNomeMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edTratamentoMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edTratamentoMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edDiasMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edDiasMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            edIntervaloMed.setTextColor(UserPreferences.COLOR_GRAY);
+            edIntervaloMed.setHintTextColor(UserPreferences.COLOR_GRAY);
+            layoutMedicamentos.setBackgroundColor(UserPreferences.COLOR_DARK);
+
+            textViewLabelNomeMedicamento.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelTratamentoMed.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelDiasMed.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelIntervaloMed.setTextColor(UserPreferences.COLOR_GRAY);
+            layoutMedicamentos.setBackgroundColor(UserPreferences.COLOR_WHITE);
+        }
+    }
+
+    private SharedPreferences getPrefs() {
+        return getSharedPreferences(UserPreferences.PREFERENCES_PATH, Context.MODE_PRIVATE);
+    }
+    public boolean isModoNoturno() {
+        SharedPreferences prefs = getPrefs();
+        return prefs.getBoolean(UserPreferences.MODO_NOTURNO, false);
+    }
+
+    public void limparMed() {
 
         edNomeMed.setText("");
         edTratamentoMed.setText("");
@@ -60,7 +179,7 @@ public class MedicamentosActivity extends AppCompatActivity {
         Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
     }
 
-    public void salvarMed(View view) {
+    public void salvarMed() {
 
         Medicamento medicamento = new Medicamento();
 
@@ -90,7 +209,11 @@ public class MedicamentosActivity extends AppCompatActivity {
             return;
         }
 
-        medicamento.setId(lastID);
+
+        if(codigoId != null){
+            medicamento.setId(codigoId);
+        }
+
         medicamento.setNome(nome);
         medicamento.setTratamento(tratamento);
         try{
@@ -107,34 +230,24 @@ public class MedicamentosActivity extends AppCompatActivity {
             return;
         }
 
-        Intent intent = new Intent();
-        intent.putExtra("id", medicamento.getId());
-        intent.putExtra("nome", medicamento.getNome());
-        intent.putExtra("tratamento", medicamento.getTratamento());
-        intent.putExtra("dias", medicamento.getDias());
-        intent.putExtra("intervalo", medicamento.getIntervalo());
-
-//        String doencaSelecionada = (String) spinnerDoenca.getSelectedItem();
-
-        montarIntentResult(medicamento, intent);
-        mostrarMensagem(getString(R.string.salvo_com_sucesso));
-
-    }
-
-    private void montarIntentResult(Medicamento medicamento, Intent intent) {
-
-        if(retornarDadosParaActivity){
-            setResult(Activity.RESULT_OK, intent);
+        if(acaoNovo){
+            database.medicamentoDao().insert(medicamento);
+            Mensagem.toast(getBaseContext(), getString(R.string.salvo_com_sucesso));
+        }else if(acaoEditar){
+            database.medicamentoDao().update(medicamento);
+            Mensagem.toast(getBaseContext(), getString(R.string.editado_com_sucesso));
         }
 
+        Intent intent = new Intent();
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
-    public void mostrarDoencas() {
 
-        List<String> doencas = asList(getString(R.string.colesterol), getString(R.string.outras));
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, doencas);
-        spinnerDoenca.setAdapter(arrayAdapter);
-
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
+
 }

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ControleColesterol">
-        <activity android:name=".UserPreferences"></activity>
+        <activity android:name=".CategoriaActivity"></activity>
+        <activity android:name=".ListaDeCategorias" />
+        <activity android:name=".UserPreferences" />
         <activity android:name=".ListaDeMedicamentosActivity" />
         <activity android:name=".AutoriaActivity" />
         <activity android:name=".MainActivity" />

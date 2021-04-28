@@ -3,77 +3,172 @@ package br.com.controlecolesterol;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.util.List;
+
+import br.com.controlecolesterol.dao.AlimentoDao;
+import br.com.controlecolesterol.dao.Database;
 import br.com.controlecolesterol.model.Alimento;
+import br.com.controlecolesterol.model.Categoria;
 
 public class AlimentosActivity extends AppCompatActivity {
 
-    public static final String INDEX_ALIMENTO = "";
-    private TextView textViewLabelCodigo, textViewCodigo;
+    private ConstraintLayout layoutAlimentActivity, layoutParentAlimentActivity;
+    private ScrollView scrollViewAlimentoActivity;
     private EditText edNomeAlim, edDescricaoAlim, edQuantidadeAlim;
     private CheckBox cbAlimentoBom;
+    private Spinner spinnerCategoria;
+    private Database database;
     private String nome, descricao, consumoRecomendado;
     private boolean acaoNovo;
     private boolean acaoEditar;
-    private int lastID;
+    private Integer codigoId;
+    private boolean MODO_NOTURNO = false;
+
+    private TextView textViewLabelTitle, textViewLabelCodigo, textViewLabelNameFood, textViewLabelDescriptionFood, textViewLabelConsume, textViewLabelQuality, textViewLabelCategory;
+    private TextView textViewCodigo;
 
     public static final String ID = "ID";
-    public static final String NOME = "NOME";
-    public static final String DESCRICAO = "DESCRICAO";
-    public static final String CONSUMO_RECOMENDADO = "CONSUMO_RECOMENDADO";
-    public static final String ALIMENTO_BOM = "ALIMENTO_BOM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alimentos);
 
+        database = Database.getDatabase(getBaseContext());
+
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
 
         textViewLabelCodigo = (TextView) findViewById(R.id.textViewLabelCodigo);
         textViewCodigo = (TextView) findViewById(R.id.textViewCodigo);
         textViewCodigo.setVisibility(View.INVISIBLE);
         textViewLabelCodigo.setVisibility(View.INVISIBLE);
 
+        textViewLabelTitle = (TextView) findViewById(R.id.textViewLabelTitle);
+        textViewLabelNameFood = (TextView) findViewById(R.id.textViewLabelNameFood);
+        textViewLabelDescriptionFood = (TextView) findViewById(R.id.textViewLabelDescriptionFood);
+        textViewLabelConsume = (TextView) findViewById(R.id.textViewLabelConsume);
+        textViewLabelQuality = (TextView) findViewById(R.id.textViewLabelQuality);
+        textViewLabelCategory = (TextView) findViewById(R.id.textViewLabelCategory);
+        layoutAlimentActivity = findViewById(R.id.layoutAlimentActivity);
+        layoutParentAlimentActivity = findViewById(R.id.layoutParentAlimentActivity);
+        scrollViewAlimentoActivity = findViewById(R.id.scrollViewAlimentoActivity);
+
         edNomeAlim = (EditText) findViewById(R.id.edNomeAlim);
         edNomeAlim = (EditText) findViewById(R.id.edNomeAlim);
         edDescricaoAlim = (EditText) findViewById(R.id.edDescricaoAlim);
         edQuantidadeAlim = (EditText) findViewById(R.id.edQuantidadeAlim);
         cbAlimentoBom = (CheckBox) findViewById(R.id.cbBomAlim);
+        spinnerCategoria = (Spinner) findViewById(R.id.spinnerCategoria);
+
+        MODO_NOTURNO = isModoNoturno();
+        setModoNoturno();
+
+        montarSpinnerCategoria(null);
 
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
 
-            int id = bundle.getInt(ID, -1);
-            if (id > 0) {
+            codigoId = bundle.getInt(ID, -1);
+            if (codigoId > 0) {
                 acaoEditar = bundle.getBoolean(ListaDeAlimentosActivity.EDITAR, false);
-                lastID = bundle.getInt(ListaDeAlimentosActivity.LAST_ID);
-                exibirDadosDeEdicaoNaTela(bundle);
+                exibirDadosDeEdicaoNaTela();
             } else {
+                codigoId = null;
                 String title = getString(R.string.novo) + getString(R.string.cadastro);
-                mostrarMensagem(title);
+                Mensagem.toast(getBaseContext(), title);
                 setTitle(title);
-
                 acaoNovo = bundle.getBoolean(ListaDeAlimentosActivity.NOVO, false);
-                lastID = bundle.getInt(ListaDeAlimentosActivity.LAST_ID);
             }
         }
+    }
+
+    private void setModoNoturno() {
+        if(MODO_NOTURNO){
+
+            scrollViewAlimentoActivity.setBackgroundColor(UserPreferences.COLOR_DARK);
+            layoutParentAlimentActivity.setBackgroundColor(UserPreferences.COLOR_DARK);
+            layoutAlimentActivity.setBackgroundColor(UserPreferences.COLOR_DARK);
+            textViewLabelCodigo.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewCodigo.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelTitle.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelNameFood.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelDescriptionFood.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelConsume.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelQuality.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelCategory.setTextColor(UserPreferences.COLOR_GRAY);
+
+            edNomeAlim.setTextColor(UserPreferences.COLOR_GRAY);
+            edNomeAlim.setHintTextColor(UserPreferences.COLOR_GRAY);
+
+            edDescricaoAlim.setTextColor(UserPreferences.COLOR_GRAY);
+            edDescricaoAlim.setHintTextColor(UserPreferences.COLOR_GRAY);
+
+            edQuantidadeAlim.setTextColor(UserPreferences.COLOR_GRAY);
+            edQuantidadeAlim.setHintTextColor(UserPreferences.COLOR_GRAY);
+
+            cbAlimentoBom.setTextColor(UserPreferences.COLOR_GRAY);
+            cbAlimentoBom.setHintTextColor(UserPreferences.COLOR_GRAY);
+
+            spinnerCategoria.setBackgroundColor(UserPreferences.COLOR_GRAY);
+
+        }else{
+
+            scrollViewAlimentoActivity.setBackgroundColor(UserPreferences.COLOR_WHITE);
+            layoutParentAlimentActivity.setBackgroundColor(UserPreferences.COLOR_WHITE);
+            layoutAlimentActivity.setBackgroundColor(UserPreferences.COLOR_WHITE);
+            textViewLabelCodigo.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewCodigo.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelTitle.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelNameFood.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelDescriptionFood.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelConsume.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelQuality.setTextColor(UserPreferences.COLOR_GRAY);
+            textViewLabelCategory.setTextColor(UserPreferences.COLOR_GRAY);
+
+            edNomeAlim.setTextColor(UserPreferences.COLOR_GRAY);
+            edNomeAlim.setHintTextColor(UserPreferences.COLOR_GRAY);
+
+            edDescricaoAlim.setTextColor(UserPreferences.COLOR_GRAY);
+            edDescricaoAlim.setHintTextColor(UserPreferences.COLOR_GRAY);
+
+            edQuantidadeAlim.setTextColor(UserPreferences.COLOR_GRAY);
+            edQuantidadeAlim.setHintTextColor(UserPreferences.COLOR_GRAY);
+
+            cbAlimentoBom.setTextColor(UserPreferences.COLOR_GRAY);
+            cbAlimentoBom.setHintTextColor(UserPreferences.COLOR_GRAY);
+
+            spinnerCategoria.setBackgroundColor(UserPreferences.COLOR_GRAY);
+        }
+    }
+
+    private SharedPreferences getPrefs() {
+        return getSharedPreferences(UserPreferences.PREFERENCES_PATH, Context.MODE_PRIVATE);
+    }
+    public boolean isModoNoturno() {
+        SharedPreferences prefs = getPrefs();
+        return prefs.getBoolean(UserPreferences.MODO_NOTURNO, false);
     }
 
     @Override
@@ -102,22 +197,44 @@ public class AlimentosActivity extends AppCompatActivity {
         }
     }
 
-    private void exibirDadosDeEdicaoNaTela(Bundle bundle) {
+    private void exibirDadosDeEdicaoNaTela() {
 
         textViewCodigo.setVisibility(View.VISIBLE);
         textViewLabelCodigo.setVisibility(View.VISIBLE);
 
         String title = getString(R.string.editando) + getString(R.string.cadastro);
-        mostrarMensagem(title);
+        Mensagem.toast(getBaseContext(), title);
         setTitle(title);
 
-        lastID = bundle.getInt(ID);
-        textViewCodigo.setText(String.valueOf(lastID));
+        Alimento alimento = database.alimentoDao().findById(codigoId);
 
-        edNomeAlim.setText(bundle.getString(NOME));
-        edDescricaoAlim.setText(bundle.getString(DESCRICAO));
-        edQuantidadeAlim.setText(bundle.getString(CONSUMO_RECOMENDADO));
-        cbAlimentoBom.setChecked(bundle.getBoolean(ALIMENTO_BOM));
+        textViewCodigo.setText(String.valueOf(alimento.getId()));
+
+        edNomeAlim.setText(alimento.getNome());
+        edDescricaoAlim.setText(alimento.getDescricao());
+        edQuantidadeAlim.setText(alimento.getConsumoRecomendado());
+        cbAlimentoBom.setChecked(alimento.isAlimentoBom());
+
+        montarSpinnerCategoria(alimento.getCategoriaId());
+    }
+
+    private void montarSpinnerCategoria(Integer categoriaId) {
+        List<Categoria> categorias = database.categoriaDao().findAll();
+        ArrayAdapter arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categorias);
+        spinnerCategoria.setAdapter(arrayAdapter);
+
+       if(categoriaId != null){
+           int categoriaPosition = categetPosicaoCategoriaId(categorias, categoriaId);
+           spinnerCategoria.setSelection(categoriaPosition);
+       }
+    }
+
+    private int categetPosicaoCategoriaId(List<Categoria> categorias, int categoriaId) {
+        for(int i = 0; i < categorias.size() ; i++){
+            if(categorias.get(i).getId() == categoriaId)
+                return i;
+        }
+        return -1;
     }
 
     public void limparAlim() {
@@ -127,12 +244,8 @@ public class AlimentosActivity extends AppCompatActivity {
         edQuantidadeAlim.setText("");
         cbAlimentoBom.setChecked(false);
         edNomeAlim.requestFocus();
-        mostrarMensagem(getString(R.string.limpo_com_sucesso));
-
-    }
-
-    private void mostrarMensagem(String mensagem) {
-        Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
+        spinnerCategoria.setSelection(0);
+        Mensagem.toast(getBaseContext(), getString(R.string.limpo_com_sucesso));
     }
 
     public void salvarAlim() {
@@ -145,42 +258,39 @@ public class AlimentosActivity extends AppCompatActivity {
 
         //Só o nome é obrigatório
         if(nome == "" || nome.trim().isEmpty()) {
-            mostrarMensagem(getString(R.string.informe_o_nome_do_alimento));
+            Mensagem.toast(getBaseContext(), getString(R.string.informe_o_nome_do_alimento));
             edNomeAlim.requestFocus();
             return;
         }
 
-        alimento.setId(lastID);
+        if(codigoId != null){
+            alimento.setId(codigoId);
+        }
         alimento.setNome(nome);
         alimento.setDescricao(descricao);
         alimento.setConsumoRecomendado(consumoRecomendado);
         alimento.setAlimentoBom(cbAlimentoBom.isChecked());
 
-        montarIntentResult(alimento);
-        mostrarMensagem(getString(R.string.salvo_com_sucesso));
+        if(spinnerCategoria.getSelectedItemId() == -1){
+            Mensagem.toast(getBaseContext(), getString(R.string.escolha_uma_categoria));
+            return;
+        }
+        Categoria categoria = (Categoria) spinnerCategoria.getSelectedItem();
+        alimento.setCategoriaId(categoria.getId());
 
-    }
-
-    private void montarIntentResult(Alimento alimento) {
-
-        Intent intent = new Intent();
-
+        AlimentoDao alimentoDao = Database.getDatabase(getBaseContext()).alimentoDao();
         if(acaoNovo){
-            intent.putExtra(ListaDeAlimentosActivity.ACAO, ListaDeAlimentosActivity.NOVO);
-            mostrarMensagem(getString(R.string.salvo_com_sucesso));
+            alimentoDao.insert(alimento);
+            Mensagem.toast(getBaseContext(), getString(R.string.salvo_com_sucesso));
         }else if(acaoEditar){
-            intent.putExtra(ListaDeAlimentosActivity.ACAO, ListaDeAlimentosActivity.EDITAR);
-            mostrarMensagem(getString(R.string.editado_com_sucesso));
+            alimentoDao.update(alimento);
+            Mensagem.toast(getBaseContext(), getString(R.string.editado_com_sucesso));
         }
 
-        intent.putExtra("id", alimento.getId());
-        intent.putExtra("nome", alimento.getNome());
-        intent.putExtra("descricao", alimento.getDescricao());
-        intent.putExtra("quantidade", alimento.getConsumoRecomendado());
-        intent.putExtra("qualidade", alimento.getAlimentoBom());
-
+        Intent intent = new Intent();
         setResult(Activity.RESULT_OK, intent);
         finish();
+
     }
 
     @Override

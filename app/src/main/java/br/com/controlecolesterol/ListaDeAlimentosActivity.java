@@ -2,6 +2,7 @@ package br.com.controlecolesterol;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,19 +15,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.controlecolesterol.adapter.AlimentosAdapter;
+import br.com.controlecolesterol.dao.Database;
 import br.com.controlecolesterol.model.Alimento;
 
 import static java.util.Comparator.comparing;
@@ -35,14 +35,13 @@ public class ListaDeAlimentosActivity extends AppCompatActivity {
 
     private LinearLayout layoutListaDeAlimentos;
     private boolean MODO_NOTURNO = false;
-    public static final String LAST_ID = "0";
     private static final int OK_1 = 1;
     private static int posicaoSelecionada = -1;
     public static final String ACAO = "ACAO";
     public static final String NOVO = "NOVO";
     public static final String EDITAR = "EDITAR";
     private ListView listaDeAlimentos;
-    private List<Alimento> alimentos = new ArrayList<>();
+    private Database database;
     private AlimentosAdapter adapter;
     private View viewSelcionada;
     private ActionMode actionMode;
@@ -96,10 +95,17 @@ public class ListaDeAlimentosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_de_alimentos);
 
+        database = Database.getDatabase(getBaseContext());
 
         layoutListaDeAlimentos = findViewById(R.id.layoutListaDeAlimentos);
-//
+
         MODO_NOTURNO = isModoNoturno();
+
+        if(MODO_NOTURNO){
+            layoutListaDeAlimentos.setBackgroundColor(UserPreferences.COLOR_DARK);
+        }else{
+            layoutListaDeAlimentos.setBackgroundColor(UserPreferences.COLOR_WHITE);
+        }
 
         setTitle(getString(R.string.lista_de_alimentos));
         listaDeAlimentos = (ListView) findViewById(R.id.listaDeAlimentos);
@@ -107,14 +113,6 @@ public class ListaDeAlimentosActivity extends AppCompatActivity {
         popularListaDeAlimentos();
 
         registerForContextMenu(listaDeAlimentos);
-
-//        listaDeAlimentos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                posicaoSelecionada = position;
-//                telaEditarAlimento();
-//            }
-//        });
 
         listaDeAlimentos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -147,18 +145,12 @@ public class ListaDeAlimentosActivity extends AppCompatActivity {
     private void telaEditarAlimento() {
 
         Alimento item = (Alimento) listaDeAlimentos.getItemAtPosition(posicaoSelecionada);
-        mostrarMensagem(getApplicationContext(), item + getString(R.string.foi_clicado));
+        Mensagem.toast(getApplicationContext(), item + getString(R.string.foi_clicado));
 
         Intent intent = new Intent(this, AlimentosActivity.class);
 
         intent.putExtra(AlimentosActivity.ID, item.getId());
-        intent.putExtra(AlimentosActivity.NOME, (item.getNome() == null || item.getNome() == "" ? "" : item.getNome()));
-        intent.putExtra(AlimentosActivity.DESCRICAO, (item.getDescricao() == null || item.getDescricao() == ""  ? "" : item.getDescricao()));
-        intent.putExtra(AlimentosActivity.CONSUMO_RECOMENDADO, (item.getConsumoRecomendado() == null || item.getConsumoRecomendado() == ""  ? "" : item.getConsumoRecomendado()));
-        intent.putExtra(AlimentosActivity.ALIMENTO_BOM, (item.getAlimentoBom()));
-
         intent.putExtra(EDITAR, true);
-        intent.putExtra(LAST_ID, item.getId());
 
         startActivityForResult(intent, OK_1);
 
@@ -172,10 +164,32 @@ public class ListaDeAlimentosActivity extends AppCompatActivity {
     }
 
     private void excluir() {
-        if(alimentos.size() > 0){
-            alimentos.remove(posicaoSelecionada);
-            montarListaAdapter();
-        }
+
+        Alimento item = (Alimento) listaDeAlimentos.getItemAtPosition(posicaoSelecionada);
+
+        String mensagem = getString(R.string.deletando)+item.getNome() + getString(R.string.deseja_continuar);
+
+        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        switch(which){
+                            case DialogInterface.BUTTON_POSITIVE:
+
+                                if(item != null){
+                                    database.alimentoDao().delete(item);
+                                    montarListaAdapter();
+                                }
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+
+                                break;
+                        }
+                    }
+                };
+
+        Mensagem.alertDialog(this, mensagem, listener);
+
     }
 
     @Override
@@ -206,42 +220,51 @@ public class ListaDeAlimentosActivity extends AppCompatActivity {
 
     private void popularListaDeAlimentos() {
 
-        int[] id = getResources().getIntArray(R.array.id_alim);
-        String[] nome = getResources().getStringArray(R.array.nome_alim);
-        String[] descricao = getResources().getStringArray(R.array.descricao);
-        String[] consumo = getResources().getStringArray(R.array.consumo_diario);
-        String[] qualidade = getResources().getStringArray(R.array.qualidade);
+        Database database = Database.getDatabase(this);
 
-        for (int i = 0; i < 3 ; i++){
-            Alimento alimento = new Alimento(id[i], nome[i], descricao[i], consumo[i], true, qualidade[i]);
-            alimentos.add(alimento);
-        }
+        database.carregaCategoriaPadrao(this);
+        database.carregaAlimentos(this);
 
         montarListaAdapter();
     }
 
-    private void ordenarLista() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            alimentos = alimentos.stream().sorted(comparing(Alimento::getId)).collect(Collectors.toList());
+    private List<Alimento> getAlimentosList() {
+
+        List<Alimento> alimentos = new ArrayList<>();
+
+        int[] id = getResources().getIntArray(R.array.id_alim);
+        String[] nome = getResources().getStringArray(R.array.nome_alim);
+        String[] descricao = getResources().getStringArray(R.array.descricao);
+        String[] consumo = getResources().getStringArray(R.array.consumo_diario);
+        int[] categoriasId = getResources().getIntArray(R.array.categoriasId);
+
+        for (int i = 0; i < id.length ; i++){
+            Alimento alimento = new Alimento(id[i], nome[i], descricao[i], consumo[i], true, categoriasId[i]);
+            alimentos.add(alimento);
         }
+        return alimentos;
+    }
+
+    private List<Alimento> ordenarLista(List<Alimento> alimentos) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return alimentos.stream().sorted(comparing(Alimento::getId)).collect(Collectors.toList());
+        }
+        return alimentos;
     }
 
     private void montarListaAdapter() {
-        ordenarLista();
-        adapter = new AlimentosAdapter(getApplicationContext(), alimentos, MODO_NOTURNO);
+
+        List<Alimento> alimentos = database.alimentoDao().findAll();
+        alimentos = ordenarLista(alimentos);
+        adapter = new AlimentosAdapter(getApplicationContext(), alimentos, MODO_NOTURNO, layoutListaDeAlimentos);
 //        ArrayAdapter<Alimento> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alimentos);
         listaDeAlimentos.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
-    private void mostrarMensagem(Context context, String mensagem) {
-        Toast.makeText(context, mensagem, Toast.LENGTH_LONG).show();
-    }
-
     public void telaNovoAlimentos() {
         Intent intent = new Intent(this, AlimentosActivity.class);
         intent.putExtra(NOVO, true);
-        intent.putExtra(LAST_ID, alimentos.size()+1);
         startActivityForResult(intent, OK_1);
     }
 
@@ -256,38 +279,11 @@ public class ListaDeAlimentosActivity extends AppCompatActivity {
 
             if(bundle != null){
 
-                Alimento alimento = new Alimento();
+                MODO_NOTURNO = bundle.getBoolean("MODO_NOTURNO");
 
-                alimento.setId(bundle.getInt("id"));
-                alimento.setNome(bundle.getString("nome"));
-                alimento.setConsumoRecomendado(bundle.getString("quantidade"));
-                alimento.setDescricao(bundle.getString("descricao"));
-                alimento.setAlimentoBom(bundle.getBoolean("qualidade"));
-
-
-                if(bundle.getString(ACAO) != null){
-
-                    if(bundle.getString(ACAO).equals(NOVO)){
-
-                        alimentos.add(alimento);
-
-                    }else if(bundle.getString(ACAO).equals(EDITAR)){
-
-                        alimentos.remove(posicaoSelecionada);
-                        alimentos.add(alimento);
-
-                        posicaoSelecionada = -1;
-                    }
-                }
-
-
-                boolean isModoNoturno = bundle.getBoolean(UserPreferences.MODO_NOTURNO, false);
-                if(isModoNoturno){
-                    mostrarMensagem(getBaseContext(), "modo noturno ativo");
-                }
-
-                montarListaAdapter();
             }
+
+            montarListaAdapter();
         }
     }
 
@@ -295,7 +291,6 @@ public class ListaDeAlimentosActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AutoriaActivity.class);
         startActivity(intent);
     }
-
 
     private SharedPreferences getPrefs() {
         return getSharedPreferences(UserPreferences.PREFERENCES_PATH, Context.MODE_PRIVATE);

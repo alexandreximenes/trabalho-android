@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutCategoriaActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CategoriaActivity">
+
+    <TextView
+        android:id="@+id/textViewLabelTituloCategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/categoria"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewLabelDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/categoria_nome"
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelTituloCategoria"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLabelTituloCategoria" />
+
+    <EditText
+        android:id="@+id/editTextCategory"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/categoria_nome"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelDescription"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLabelDescription" />
+</androidx.constraintlayout.widget.ConstraintLayout>
